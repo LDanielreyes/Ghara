@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
-import ScrollReveal from '../components/ui/ScrollReveal';
+import ScrollReveal from '../../shared/components/ui/ScrollReveal';
 
 const BenefitCard = ({ icon, title, description, index }) => {
     const ref = React.useRef(null);

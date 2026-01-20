@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
-import ProductCard from '../ui/ProductCard';
+import ProductCard from '../../../shared/components/ui/ProductCard';
 
 const products = [
     {

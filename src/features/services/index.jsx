@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import Services from '../components/sections/Services';
+import Services from './components/Services';
 
 const ServicesPage = () => {
     useEffect(() => {

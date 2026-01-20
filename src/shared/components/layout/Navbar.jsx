@@ -5,7 +5,8 @@ import useTheme from '../../hooks/useTheme';
 
 const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
-    const [isDarkSection, setIsDarkSection] = useState(true);
+    // Refactored to avoid setState in useEffect
+    const [isScrollDark, setIsScrollDark] = useState(true);
     const { theme, toggleTheme } = useTheme();
     const isDarkMode = theme === 'dark';
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -13,6 +14,9 @@ const Navbar = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const isHomePage = location.pathname === '/';
+
+    // Derive isDarkSection instead of syncing state
+    const isDarkSection = isHomePage ? isScrollDark : isDarkMode;
 
     useMotionValueEvent(scrollY, "change", (latest) => {
         setIsScrolled(latest > 20);
@@ -31,18 +35,28 @@ const Navbar = () => {
     }, [location]);
 
     useEffect(() => {
-        // If not home page, force dark section style (or decide style)
-        if (!isHomePage) {
-            setIsDarkSection(false); // Services page is mostly light/dark adjustable, but header implies bg. Let's assume light for now or content dependent. 
-            // Actually Services header is white/black. Navbar should adapt.
-            // Simplified logic for non-home pages:
-            setIsDarkSection(theme === 'dark');
-            return;
-        }
+        if (!isHomePage) return;
 
         const handleScroll = () => {
             let onLightSection = false;
-            const lightSections = ['catalogo', 'afiliados']; // Removed servicios from here as it's a page now
+            // 'familia' is mostly light bg so header should be dark text? 
+            // Checking page content: First section is Hero with Image (Dark Header needed or Glass). 
+            // Hero text is white. So header should be white/glass. 
+            // Wait, "lightSections" logic in Navbar means "Use Dark Text".
+            // Familia Page Hero: Image background -> White Text -> Transparent/Glass Navbar.
+            // Scroll down in Familia Page: White background -> Dark Text -> Glass Dark Text Navbar.
+            // The current logic checks sections by ID on the home page.
+            // On other pages, it defaults to: isHomePage ? ... : theme === 'dark'.
+            // If I want dynamic navbar on Familia Page, I need to implement section observers there too OR just rely on default.
+            // Default for non-home is "theme === dark". 
+            // Familia page has white background sections. In Light Mode, header should be Dark Text. 
+            // In Dark Mode, header should be White Text.
+            // This matches the default behavior (theme === 'dark' -> White Text).
+            // So NO CHANGE needed for lightSections array specifically for the page logic itself, 
+            // BUT if I want the transparent hero effect on Familia page, that's different.
+            // Current Navbar logic forces !isHomePage to just use theme. 
+            // I will stick to default behavior for now as it's safer.
+            const lightSections = ['catalogo', 'afiliados'];
 
             const sections = document.querySelectorAll('section[id]');
             sections.forEach(sec => {
@@ -53,12 +67,14 @@ const Navbar = () => {
                     }
                 }
             });
-            setIsDarkSection(!onLightSection);
+            setIsScrollDark(!onLightSection);
         };
 
         window.addEventListener('scroll', handleScroll);
+        // Initial check
+        handleScroll();
         return () => window.removeEventListener('scroll', handleScroll);
-    }, [isHomePage, theme]);
+    }, [isHomePage]);
 
     // Lock body scroll when mobile menu is open
     useEffect(() => {
@@ -80,6 +96,8 @@ const Navbar = () => {
         if (targetId === 'inicio') {
             navigate('/');
             window.scrollTo(0, 0);
+        } else if (targetId === 'familia') {
+            navigate('/familia');
         } else if (targetId === 'servicios') {
             navigate('/servicios');
         } else if (targetId === 'afiliados') {
@@ -99,25 +117,25 @@ const Navbar = () => {
     };
 
     // Derived styles
-    let navClasses = 'transition-all duration-500 ease-out border border-transparent';
+    let navClasses = 'transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] border border-transparent';
 
     if (isScrolled) {
         if (isDarkSection) {
-            navClasses = 'glass-dark shadow-lg border-white/10 py-3';
+            navClasses = 'glass-dark shadow-lg border-white/5 py-3';
         } else {
-            navClasses = 'glass shadow-lg border-white/40 py-3';
+            navClasses = 'glass shadow-lg border-white/20 py-3';
         }
     } else {
         // On non-home pages, always show background for visibility
         if (!isHomePage) {
             if (isDarkMode) {
-                navClasses = 'glass-dark shadow-lg border-white/10 py-5';
+                navClasses = 'glass-dark shadow-lg border-white/5 py-4';
             } else {
-                navClasses = 'glass shadow-lg border-white/40 py-5';
+                navClasses = 'glass shadow-lg border-white/20 py-4';
             }
         } else {
             // On home page, keep transparent when not scrolled
-            navClasses = 'bg-transparent py-5';
+            navClasses = 'bg-transparent py-5 border-transparent';
         }
     }
 
@@ -138,7 +156,7 @@ const Navbar = () => {
                     </a>
 
                     {/* Desktop Menu */}
-                    <div className={`hidden md:flex items-center gap-1 px-2 py-1 rounded-full transition-all duration-300 ${isScrolled && !isDarkSection ? 'bg-slate-100/30' : 'bg-white/5 backdrop-blur-sm'}`}>
+                    <div className="hidden md:flex items-center gap-1 px-2 py-1 rounded-full transition-all duration-300">
                         {['Inicio', 'Familia Ghara', 'Catálogo', 'Afiliados', 'Servicios'].map((item) => (
                             <a
                                 key={item}
@@ -165,9 +183,9 @@ const Navbar = () => {
                         </button>
 
                         {/* CTA */}
-                        <a href="#quote" className="hidden md:block btn-primary-glow text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg transition-transform hover:-translate-y-0.5">
+                        <button onClick={() => navigate('/calculadora')} className="hidden md:block btn-primary-glow text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg transition-transform hover:-translate-y-0.5">
                             Calculadora
-                        </a>
+                        </button>
 
                         {/* Mobile Menu Button */}
                         <button

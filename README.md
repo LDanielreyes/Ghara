@@ -1,17 +1,75 @@
-# React + Vite
+# Ghara - Modern Real Estate Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Ghara is a modern, responsive real estate application designed to make finding your dream home an effortless experience. Built with performance and user experience in mind, it features a sleek UI, interactive maps, and smooth animations.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-   🏠 **Property Listings**: Browse a curated list of properties with detailed information.
+-   🗺️ **Interactive Maps**: View property locations using integrated Leaflet maps.
+-   ✨ **Modern UI/UX**: Built with Tailwind CSS and Framer Motion for a premium feel.
+-   📱 **Fully Responsive**: Optimized for all devices, from mobile to desktop.
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+-   **Frontend**: React 19, Vite
+-   **Styling**: Tailwind CSS 4, Motion (Framer Motion)
+-   **Icons**: Lucide React
+-   **Maps**: Leaflet, React Leaflet
+-   **Routing**: React Router DOM
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-# Ghara
+### Prerequisites
+
+-   Node.js (v18 or higher recommended)
+-   npm or yarn
+
+### Installation
+
+1.  Clone the repository:
+    ```bash
+    git clone https://github.com/yourusername/ghara.git
+    cd ghara
+    ```
+
+2.  Install dependencies:
+    ```bash
+    npm install
+    ```
+
+3.  Start the development server:
+    ```bash
+    npm run dev
+    ```
+
+4.  Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+## Building for Production
+
+To create a production build:
+
+```bash
+npm run build
+```
+
+To preview the production build locally:
+
+```bash
+npm run preview
+```
+
+## Docker Deployment
+
+This project includes a `Dockerfile` for containerized deployment using Nginx.
+
+1.  Build the image:
+    ```bash
+    docker build -t ghara .
+    ```
+
+2.  Run the container:
+    ```bash
+    docker run -p 8080:80 ghara
+    ```
+
+Access the app at [http://localhost:8080](http://localhost:8080).

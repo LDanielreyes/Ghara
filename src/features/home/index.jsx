@@ -1,12 +1,12 @@
 import React from 'react';
-import Hero from '../components/sections/Hero';
-import BestSellers from '../components/sections/BestSellers';
-import MaintenanceBanner from '../components/sections/MaintenanceBanner';
-import BrandLogos from '../components/sections/BrandLogos';
-import OurApproaches from '../components/sections/OurApproaches';
-import DistributionCenter from '../components/sections/DistributionCenter';
-import LocationMap from '../components/sections/LocationMap';
-import ScrollReveal from '../components/ui/ScrollReveal';
+import Hero from './components/Hero';
+import BestSellers from './components/BestSellers';
+import MaintenanceBanner from './components/MaintenanceBanner';
+import BrandLogos from './components/BrandLogos';
+import OurApproaches from './components/OurApproaches';
+import DistributionCenter from './components/DistributionCenter';
+import LocationMap from './components/LocationMap';
+import ScrollReveal from '../../shared/components/ui/ScrollReveal';
 
 const Home = () => {
     return (

@@ -3,10 +3,10 @@ import { motion } from 'framer-motion';
 
 const ServiceCard = ({ icon, title, features, recommended, index }) => (
     <motion.div
-        className={`relative p-8 rounded-[2rem] h-full group cursor-pointer
+        className={`relative p-8 rounded-[2rem] h-full group cursor-pointer overflow-hidden
             ${recommended
-                ? 'bg-white dark:bg-slate-900 shadow-xl scale-105 z-10 border-2 border-transparent dark:border-cyber-cyan'
-                : 'bg-slate-50 dark:bg-black border border-slate-200 dark:border-white/10'
+                ? 'bg-gradient-to-br from-white to-blue-50 dark:from-slate-900 dark:to-slate-800 shadow-xl scale-105 z-10 border border-blue-100 dark:border-cyan-500/30'
+                : 'bg-white dark:bg-black border border-slate-100 dark:border-white/5 hover:border-blue-200 dark:hover:border-white/20'
             }
         `}
         initial={{ opacity: 0, y: 50 }}
@@ -20,16 +20,18 @@ const ServiceCard = ({ icon, title, features, recommended, index }) => (
         }}
         whileHover={{
             y: -12,
-            scale: recommended ? 1.05 : 1.03,
+            scale: recommended ? 1.05 : 1.02,
             boxShadow: recommended
-                ? "0 25px 50px -12px rgba(0, 240, 255, 0.3)"
-                : "0 20px 40px -10px rgba(59, 130, 246, 0.15)"
+                ? "0 30px 60px -12px rgba(6, 182, 212, 0.25)"
+                : "0 20px 40px -10px rgba(0, 0, 0, 0.1)"
         }}
-        style={{ transformStyle: 'preserve-3d' }}
     >
+        {/* Glow Background Effect */}
+        <div className={`absolute -inset-2 bg-gradient-to-r ${recommended ? 'from-cyan-400 to-blue-500' : 'from-slate-200 to-slate-200 dark:from-slate-800 dark:to-slate-800'} rounded-[2.5rem] blur-2xl opacity-0 group-hover:opacity-10 dark:group-hover:opacity-20 transition-opacity duration-500 -z-10`}></div>
+
         {recommended && (
             <motion.div
-                className="absolute -top-4 left-1/2 -translate-x-1/2 bg-cyan-400 text-white text-[10px] font-bold tracking-widest px-4 py-1 rounded-full uppercase shadow-lg"
+                className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-cyan-400 to-blue-500 text-white text-[10px] font-bold tracking-widest px-4 py-1.5 rounded-full uppercase shadow-lg shadow-cyan-500/20"
                 initial={{ scale: 0, rotate: -180 }}
                 whileInView={{ scale: 1, rotate: 0 }}
                 viewport={{ once: true }}
@@ -46,10 +48,10 @@ const ServiceCard = ({ icon, title, features, recommended, index }) => (
 
         {/* Icon */}
         <motion.div
-            className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 text-3xl
+            className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 text-3xl transition-colors duration-300
                 ${recommended
-                    ? 'bg-primary text-white dark:bg-cyber-cyan dark:text-black'
-                    : 'bg-white text-primary dark:bg-slate-900 dark:text-white shadow-sm'
+                    ? 'bg-blue-600 text-white dark:bg-cyan-500 dark:text-black shadow-lg shadow-blue-500/20'
+                    : 'bg-slate-100 text-slate-600 dark:bg-slate-900 dark:text-white group-hover:bg-blue-50 dark:group-hover:bg-slate-800 group-hover:text-blue-600 dark:group-hover:text-cyan-400'
                 }
             `}
             whileHover={{ rotate: [0, -10, 10, -10, 0], scale: 1.1 }}
@@ -65,7 +67,7 @@ const ServiceCard = ({ icon, title, features, recommended, index }) => (
             {title}
         </motion.h3>
 
-        <ul className="space-y-4">
+        <ul className="space-y-4 relative z-10">
             {features.map((item, idx) => (
                 <motion.li
                     key={idx}
@@ -78,7 +80,7 @@ const ServiceCard = ({ icon, title, features, recommended, index }) => (
                 >
                     <motion.span
                         className={`material-symbols-outlined text-lg mt-0.5
-                            ${recommended ? 'text-cyan-500' : 'text-cyan-500/70'}
+                            ${recommended ? 'text-cyan-500' : 'text-slate-400 group-hover:text-blue-500 transition-colors'}
                         `}
                         whileHover={{ scale: 1.3, rotate: 360 }}
                         transition={{ type: "spring", stiffness: 300 }}
@@ -90,10 +92,12 @@ const ServiceCard = ({ icon, title, features, recommended, index }) => (
             ))}
         </ul>
 
-        <div className="mt-8 pt-8 border-t border-slate-100 dark:border-white/5">
+        <div className="mt-8 pt-8 border-t border-slate-100 dark:border-white/5 relative z-10">
             <motion.a
                 href="#"
-                className="flex items-center gap-2 text-sm font-bold text-primary dark:text-cyber-cyan group"
+                className={`flex items-center gap-2 text-sm font-bold group/link
+                    ${recommended ? 'text-blue-600 dark:text-cyan-400' : 'text-slate-500 dark:text-slate-500 group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors'}
+                `}
                 whileHover={{ gap: "0.75rem" }}
                 transition={{ type: "spring", stiffness: 400 }}
             >
@@ -112,27 +116,27 @@ const ServiceCard = ({ icon, title, features, recommended, index }) => (
 
 const Step = ({ number, title, description, index }) => (
     <motion.div
-        className="flex flex-col items-center text-center relative z-10"
+        className="flex flex-col items-center text-center relative z-10 group"
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ delay: index * 0.2, type: "spring", stiffness: 100 }}
+        whileHover={{ y: -5 }}
     >
         <motion.div
-            className="w-16 h-16 rounded-full border-2 border-primary dark:border-cyber-cyan text-primary dark:text-cyber-cyan font-display font-bold text-2xl flex items-center justify-center mb-6 bg-white dark:bg-black relative z-10 shadow-lg dark:shadow-tech-cyan"
+            className="w-20 h-20 rounded-2xl border-2 border-slate-100 dark:border-white/10 text-slate-300 dark:text-slate-700 font-display font-bold text-3xl flex items-center justify-center mb-6 bg-white dark:bg-black relative z-10 shadow-lg dark:shadow-none transition-all duration-300"
             whileHover={{
-                scale: 1.2,
-                backgroundColor: "#3b82f6",
-                color: "#ffffff",
-                borderColor: "#3b82f6"
+                scale: 1.1,
+                borderColor: "#3b82f6",
+                color: "#3b82f6",
+                boxShadow: "0 10px 30px -10px rgba(59, 130, 246, 0.3)"
             }}
-            transition={{ type: "spring", stiffness: 300 }}
         >
             {number}
         </motion.div>
         <motion.h4
             className="font-display font-bold text-xl text-slate-900 dark:text-white mb-3"
-            whileHover={{ scale: 1.05, color: "#06b6d4" }}
+            whileHover={{ color: "#3b82f6" }}
         >
             {title}
         </motion.h4>

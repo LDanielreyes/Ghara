@@ -56,7 +56,7 @@ const RoutingMachine = ({ userLocation, destination }) => {
             lineOptions: {
                 styles: [{ color: '#0C4D89', weight: 6 }]
             },
-            createMarker: function (i, waypoint, n) {
+            createMarker: function (i, waypoint) {
                 // i = 0 is start (User), i = n-1 is end (Ghara)
                 if (i === 0) {
                     return L.marker(waypoint.latLng, { icon: RedIcon }).bindPopup("<b>Tu Ubicación</b>");
@@ -97,7 +97,6 @@ const ChangeView = ({ center }) => {
 const LocationMap = () => {
     const [userLocation, setUserLocation] = useState(null);
     const gharaLocation = [10.976843956774486, -74.80834662359939]; // Precise coordinates provided by user
-    const gharaAddress = "X5GR+PP Barranquilla, Atlántico";
 
     const handleGetDirections = () => {
         if (!navigator.geolocation) {
