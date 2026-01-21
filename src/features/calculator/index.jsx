@@ -268,7 +268,7 @@ const CalculatorPage = () => {
                     </motion.p>
                 </div>
 
-                <div className={`grid ${resultado ? 'lg:grid-cols-12' : 'grid-cols-1 max-w-3xl mx-auto'} gap-8 items-start transition-all duration-700`}>
+                <div className="max-w-3xl mx-auto space-y-8">
 
                     {/* --- Input Form --- */}
                     <motion.div
@@ -276,7 +276,7 @@ const CalculatorPage = () => {
                         variants={containerVariants}
                         initial="hidden"
                         animate="visible"
-                        className={`${resultado ? 'lg:col-span-7' : 'col-span-1'} bg-white dark:bg-slate-800/50 backdrop-blur-xl rounded-[2.5rem] p-8 md:p-10 shadow-2xl border border-slate-100 dark:border-white/5 space-y-8 overflow-hidden relative`}
+                        className="bg-white dark:bg-slate-800/50 backdrop-blur-xl rounded-[2.5rem] p-8 md:p-10 shadow-2xl border border-slate-100 dark:border-white/5 space-y-8 overflow-hidden relative"
                     >
                         {/* Decorative Background Blob */}
                         <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-10 pointer-events-none"></div>
@@ -437,13 +437,13 @@ const CalculatorPage = () => {
                     </motion.div>
 
                     {/* --- Results Section --- */}
-                    <div className="lg:col-span-5 relative" ref={resultRef}>
+                    <div className="w-full" ref={resultRef}>
                         <AnimatePresence mode="wait">
                             {resultado && (
                                 <motion.div
-                                    initial={{ opacity: 0, x: 20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    exit={{ opacity: 0, x: -20 }}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -20 }}
                                     className="space-y-6"
                                 >
                                     {/* Main Result Card */}

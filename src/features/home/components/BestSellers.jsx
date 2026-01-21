@@ -6,21 +6,21 @@ const products = [
     {
         name: "Split Inverter",
         price: "$499.00",
-        image: "/media/split_inverter.png",
+        image: "/media/split_wall_modern.png",
         category: "INVERTER",
         description: "Unidad Interior 1.5T"
     },
     {
         name: "Unidad Condensadora",
         price: "$850.00",
-        image: "/media/condenser_unit.png",
+        image: "/media/condenser_outdoor.png",
         category: "CONDENSADORA",
         description: "Alta Eficiencia 2T"
     },
     {
         name: "Compacto Ventana",
         price: "$350.00",
-        image: "/media/window_ac.png",
+        image: "/media/window_compact.png",
         category: "COMPACTO",
         description: "Serie 5000 BTU"
     },

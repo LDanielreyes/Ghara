@@ -11,6 +11,22 @@ const ProductCard = ({ name, description, price, image, category }) => {
             transition={{ duration: 0.5 }}
             whileHover={{ y: -8 }}
         >
+            {/* Text Content First */}
+            <div className="mb-4">
+                <span className="text-primary dark:text-cyber-cyan text-xs font-bold tracking-widest uppercase transition-colors block mb-2">
+                    {category}
+                </span>
+
+                <motion.h3
+                    className="font-display font-bold text-xl text-primary dark:text-white group-hover:dark:text-cyber-cyan transition-colors mb-1"
+                    whileHover={{ x: 4 }}
+                    transition={{ type: "spring", stiffness: 400 }}
+                >
+                    {name}
+                </motion.h3>
+                <p className="text-sm text-secondary dark:text-slate-400">{description}</p>
+            </div>
+
             {/* Image Container - Tech Styling with 3D effect */}
             <motion.div
                 className="relative bg-surface-light dark:bg-black rounded-3xl p-8 mb-6 flex items-center justify-center h-64 overflow-visible border-transparent dark:border dark:border-white/10 dark:group-hover:border-cyber-cyan transition-all duration-500"
@@ -21,10 +37,6 @@ const ProductCard = ({ name, description, price, image, category }) => {
                 }}
                 transition={{ duration: 0.3 }}
             >
-                <span className="absolute top-6 left-6 z-10 text-primary dark:text-cyber-cyan text-xs font-bold tracking-widest uppercase transition-colors">
-                    {category}
-                </span>
-
                 <motion.img
                     src={image}
                     alt={`${name} ${description}`}
@@ -44,21 +56,13 @@ const ProductCard = ({ name, description, price, image, category }) => {
                 />
             </motion.div>
 
-            <motion.h3
-                className="font-display font-bold text-xl text-primary dark:text-white group-hover:dark:text-cyber-cyan transition-colors mb-1"
-                whileHover={{ x: 4 }}
-                transition={{ type: "spring", stiffness: 400 }}
-            >
-                {name}
-            </motion.h3>
-            <p className="text-sm text-secondary dark:text-slate-400 mb-3">{description}</p>
-
+            {/* Price and Action */}
             <div className="mt-auto flex items-center justify-between">
                 <motion.span
                     className="font-display font-bold text-2xl text-primary dark:text-cyber-cyan transition-all"
                     whileHover={{ scale: 1.05 }}
                 >
-                    ${price}
+                    {price}
                 </motion.span>
 
                 <motion.button
