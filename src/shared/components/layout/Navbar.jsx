@@ -24,7 +24,7 @@ const Navbar = () => {
     // Determine if we are on a "Dark Section" (requiring white text)
     // On Home: Calculated dynamically via scroll position
     // On Services: Top is Dark (Hero Image), Scrolled is Light (White Body)
-    const isDarkSection = isHomePage ? isScrollDark : (hasTransparentHero && !isScrolled);
+    // const isDarkSection = isHomePage ? isScrollDark : (hasTransparentHero && !isScrolled);
 
     useMotionValueEvent(scrollY, "change", (latest) => {
         setIsScrolled(latest > 20);
