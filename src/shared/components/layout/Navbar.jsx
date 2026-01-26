@@ -1,28 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import { useMotionValueEvent, useScroll } from 'framer-motion';
+import { motion, useMotionValueEvent, useScroll, AnimatePresence } from 'framer-motion';
 import { useLocation, useNavigate } from 'react-router-dom';
 import useTheme from '../../hooks/useTheme';
 
 const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
-    // Refactored to avoid setState in useEffect
     const [isScrollDark, setIsScrollDark] = useState(true);
     const { theme, toggleTheme } = useTheme();
     const isDarkMode = theme === 'dark';
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [hoveredItem, setHoveredItem] = useState(null);
     const { scrollY } = useScroll();
     const location = useLocation();
     const navigate = useNavigate();
-    const isHomePage = location.pathname === '/';
 
-    // Derive isDarkSection instead of syncing state
-    const isDarkSection = isHomePage ? isScrollDark : isDarkMode;
+    // Page detection
+    const isHomePage = location.pathname === '/';
+    // Check for service pages (both residential and enterprise)
+    const isServicesPage = location.pathname.includes('/servicios/');
+    // Hero should be transparent on Home and Service pages
+    const hasTransparentHero = isHomePage || isServicesPage;
+
+    // Determine if we are on a "Dark Section" (requiring white text)
+    // On Home: Calculated dynamically via scroll position
+    // On Services: Top is Dark (Hero Image), Scrolled is Light (White Body)
+    const isDarkSection = isHomePage ? isScrollDark : (hasTransparentHero && !isScrolled);
 
     useMotionValueEvent(scrollY, "change", (latest) => {
         setIsScrolled(latest > 20);
     });
 
-    // Handle scroll to hash when location changes
     useEffect(() => {
         if (location.hash) {
             const element = document.getElementById(location.hash.substring(1));
@@ -35,28 +42,12 @@ const Navbar = () => {
     }, [location]);
 
     useEffect(() => {
+        // Only run section detection on Home Page
         if (!isHomePage) return;
 
         const handleScroll = () => {
             let onLightSection = false;
-            // 'familia' is mostly light bg so header should be dark text? 
-            // Checking page content: First section is Hero with Image (Dark Header needed or Glass). 
-            // Hero text is white. So header should be white/glass. 
-            // Wait, "lightSections" logic in Navbar means "Use Dark Text".
-            // Familia Page Hero: Image background -> White Text -> Transparent/Glass Navbar.
-            // Scroll down in Familia Page: White background -> Dark Text -> Glass Dark Text Navbar.
-            // The current logic checks sections by ID on the home page.
-            // On other pages, it defaults to: isHomePage ? ... : theme === 'dark'.
-            // If I want dynamic navbar on Familia Page, I need to implement section observers there too OR just rely on default.
-            // Default for non-home is "theme === dark". 
-            // Familia page has white background sections. In Light Mode, header should be Dark Text. 
-            // In Dark Mode, header should be White Text.
-            // This matches the default behavior (theme === 'dark' -> White Text).
-            // So NO CHANGE needed for lightSections array specifically for the page logic itself, 
-            // BUT if I want the transparent hero effect on Familia page, that's different.
-            // Current Navbar logic forces !isHomePage to just use theme. 
-            // I will stick to default behavior for now as it's safer.
-            const lightSections = ['catalogo', 'afiliados'];
+            const lightSections = ['catalogo', 'aliados'];
 
             const sections = document.querySelectorAll('section[id]');
             sections.forEach(sec => {
@@ -71,12 +62,10 @@ const Navbar = () => {
         };
 
         window.addEventListener('scroll', handleScroll);
-        // Initial check
         handleScroll();
         return () => window.removeEventListener('scroll', handleScroll);
     }, [isHomePage]);
 
-    // Lock body scroll when mobile menu is open
     useEffect(() => {
         if (isMobileMenuOpen) {
             document.body.style.overflow = 'hidden';
@@ -88,7 +77,6 @@ const Navbar = () => {
         };
     }, [isMobileMenuOpen]);
 
-    // Navigation Handler
     const handleNavClick = (e, item) => {
         e.preventDefault();
         const targetId = item.toLowerCase().split(' ')[0];
@@ -100,12 +88,11 @@ const Navbar = () => {
             navigate('/familia');
         } else if (targetId === 'servicios') {
             navigate('/servicios');
-        } else if (targetId === 'afiliados') {
-            navigate('/afiliados');
+        } else if (targetId === 'aliados') {
+            navigate('/aliados');
         } else if (targetId === 'catálogo') {
             navigate('/catalogo');
         } else {
-            // Hash link
             if (isHomePage) {
                 const element = document.getElementById(targetId);
                 if (element) element.scrollIntoView({ behavior: 'smooth' });
@@ -116,76 +103,228 @@ const Navbar = () => {
         setIsMobileMenuOpen(false);
     };
 
-    // Derived styles
+    // --- Dynamic Styles Calculation ---
+
     let navClasses = 'transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] border border-transparent';
 
     if (isScrolled) {
-        if (isDarkSection) {
-            navClasses = 'glass-dark shadow-lg border-white/5 py-3';
+        // SCROLLED STATE
+
+        // If we are on a "Dark Section" (Home Dark Section OR Services Top technically but scrolled means we left top...)
+        // Actually for Services, once scrolled, we are on white body, so isDarkSection is false.
+        // For Home, depends on section.
+
+        // Default Logic when scrolled: Glass effect
+        if (isHomePage) {
+            if (isScrollDark) {
+                // Scrolled on Dark Home Section -> Dark Glass
+                navClasses = 'glass-dark shadow-lg border-white/5 py-3';
+            } else {
+                // Scrolled on Light Home Section -> Light Glass
+                navClasses = 'glass shadow-lg border-white/20 py-3';
+            }
         } else {
-            navClasses = 'glass shadow-lg border-white/20 py-3';
+            // Not Home (Services, etc)
+            // If Dark Mode -> Dark Glass
+            if (isDarkMode) {
+                navClasses = 'glass-dark shadow-lg border-white/5 py-3';
+            } else {
+                // Light Mode -> Light Glass
+                navClasses = 'glass shadow-lg border-white/20 py-3';
+            }
         }
     } else {
-        // On non-home pages, always show background for visibility
-        if (!isHomePage) {
+        // TOP STATE (Not Scrolled)
+        if (hasTransparentHero) {
+            // Transparent for Hero
+            navClasses = 'bg-transparent py-5 border-transparent';
+        } else {
+            // Regular Pages Top
             if (isDarkMode) {
                 navClasses = 'glass-dark shadow-lg border-white/5 py-4';
             } else {
                 navClasses = 'glass shadow-lg border-white/20 py-4';
             }
-        } else {
-            // On home page, keep transparent when not scrolled
-            navClasses = 'bg-transparent py-5 border-transparent';
         }
     }
 
-    const useDarkText = isScrolled && !isDarkSection;
-    // On non-home pages when not scrolled, use dark text in light mode
-    const usePageDarkText = !isHomePage && !isScrolled && !isDarkMode;
-    const textColorClass = (useDarkText || usePageDarkText) ? 'text-primary' : 'text-white';
-    const logoSrc = (useDarkText || usePageDarkText) ? '/media/logo-azul-ghara.svg' : '/media/logo-blanco-ghara.svg';
+    // Text Color Logic
+    let useDarkText = false;
+
+    if (isScrolled) {
+        // Scrolled
+        if (isDarkMode) {
+            useDarkText = false; // Dark Mode Scrolled -> White Text
+        } else {
+            // Light Mode Scrolled
+            if (isHomePage) {
+                useDarkText = !isScrollDark; // Home: Depend on section (Dark Section = White Text)
+            } else {
+                useDarkText = true; // Service/Other: White bg -> Dark Text
+            }
+        }
+    } else {
+        // Top
+        if (hasTransparentHero) {
+            useDarkText = false; // Transparent Hero -> White Text always
+        } else {
+            useDarkText = !isDarkMode; // Regular Page -> Follow Theme
+        }
+    }
+
+    const textColorClass = useDarkText ? 'text-primary' : 'text-white';
+    const logoSrc = useDarkText ? '/media/logo-azul-ghara.svg' : '/media/logo-blanco-ghara.svg';
+    const hoverBgColor = useDarkText ? 'rgba(12, 77, 137, 0.08)' : 'rgba(255, 255, 255, 0.15)';
 
     return (
         <>
-            <nav className={`fixed top-4 left-4 right-4 z-50 rounded-2xl ${navClasses}`}>
+            <motion.nav
+                className={`fixed top-4 left-4 right-4 z-50 rounded-2xl ${navClasses}`}
+                initial={{ y: -100 }}
+                animate={{ y: 0 }}
+                transition={{ duration: 0.6, ease: "circOut" }}
+            >
                 <div className="container mx-auto px-6 flex items-center justify-between">
 
                     {/* Logo */}
-                    <a href="/" onClick={(e) => handleNavClick(e, 'Inicio')} className="flex items-center gap-3">
-                        <img src={logoSrc} alt="Ghara" className="h-8 w-auto transition-all duration-300" />
+                    <a href="/" onClick={(e) => handleNavClick(e, 'Inicio')} className="flex items-center gap-3 relative z-10">
+                        <motion.img
+                            src={logoSrc}
+                            alt="Ghara"
+                            className="h-16 md:h-20 w-auto"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            transition={{ type: "spring", stiffness: 300 }}
+                        />
                     </a>
 
                     {/* Desktop Menu */}
-                    <div className="hidden md:flex items-center gap-1 px-2 py-1 rounded-full transition-all duration-300">
-                        {['Inicio', 'Familia Ghara', 'Catálogo', 'Afiliados', 'Servicios'].map((item) => (
-                            <a
-                                key={item}
-                                href={`#${item.toLowerCase().split(' ')[0]}`}
-                                onClick={(e) => handleNavClick(e, item)}
-                                className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${textColorClass} hover:bg-white/10 hover:scale-105 cursor-pointer`}
-                            >
-                                {item}
-                            </a>
-                        ))}
+                    <div className="hidden md:flex items-center gap-1">
+                        {['Inicio', 'Familia Ghara', 'Aliados', 'Servicios'].map((item) => {
+                            const isHovered = hoveredItem === item;
+
+                            if (item === 'Servicios') {
+                                return (
+                                    <div
+                                        key={item}
+                                        className="relative group px-1"
+                                        onMouseEnter={() => setHoveredItem(item)}
+                                        onMouseLeave={() => setHoveredItem(null)}
+                                    >
+                                        <button
+                                            onClick={(e) => handleNavClick(e, item)}
+                                            className={`relative px-5 py-2 rounded-full text-sm font-bold transition-colors duration-300 ${textColorClass} cursor-pointer flex items-center gap-1 z-10`}
+                                        >
+                                            {item}
+                                            <motion.span
+                                                animate={{ rotate: isHovered ? 180 : 0 }}
+                                                className="material-symbols-outlined text-sm"
+                                            >
+                                                expand_more
+                                            </motion.span>
+
+                                            {isHovered && (
+                                                <motion.div
+                                                    layoutId="navbar-hover"
+                                                    className="absolute inset-0 rounded-full z-[-1]"
+                                                    style={{ backgroundColor: hoverBgColor }}
+                                                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                                                />
+                                            )}
+                                        </button>
+
+                                        {/* Dropdown */}
+                                        <AnimatePresence>
+                                            {isHovered && (
+                                                <motion.div
+                                                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                                                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                                                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                                                    transition={{ duration: 0.2, ease: "easeOut" }}
+                                                    className="absolute top-full left-0 mt-2 w-60 bg-white dark:bg-slate-900 rounded-2xl shadow-xl overflow-hidden origin-top-left border border-slate-100 dark:border-slate-800"
+                                                >
+                                                    <div className="p-2 space-y-1">
+                                                        {[
+                                                            { name: 'Residenciales', icon: 'home', path: '/servicios/residenciales' },
+                                                            { name: 'Empresariales', icon: 'business', path: '/servicios/empresariales' }
+                                                        ].map((subItem) => (
+                                                            <a
+                                                                key={subItem.name}
+                                                                href={subItem.path}
+                                                                onClick={(e) => {
+                                                                    e.preventDefault();
+                                                                    navigate(subItem.path);
+                                                                    setHoveredItem(null);
+                                                                }}
+                                                                className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group/item relative overflow-hidden"
+                                                            >
+                                                                <div className="w-10 h-10 rounded-lg bg-primary/10 dark:bg-cyan-500/10 flex items-center justify-center text-primary dark:text-cyan-400 group-hover/item:bg-primary group-hover/item:text-white dark:group-hover/item:bg-cyan-500 dark:group-hover/item:text-black transition-all">
+                                                                    <span className="material-symbols-outlined text-xl">{subItem.icon}</span>
+                                                                </div>
+                                                                <div className="flex flex-col">
+                                                                    <span className="text-sm font-bold text-slate-900 dark:text-white">{subItem.name}</span>
+                                                                    <span className="text-[10px] text-slate-500 font-medium">Ver servicios</span>
+                                                                </div>
+                                                            </a>
+                                                        ))}
+                                                    </div>
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
+                                    </div>
+                                );
+                            }
+
+                            return (
+                                <a
+                                    key={item}
+                                    href={`#${item.toLowerCase().split(' ')[0]}`}
+                                    onClick={(e) => handleNavClick(e, item)}
+                                    onMouseEnter={() => setHoveredItem(item)}
+                                    onMouseLeave={() => setHoveredItem(null)}
+                                    className={`relative px-5 py-2 rounded-full text-sm font-bold transition-colors duration-300 ${textColorClass} cursor-pointer z-10 block`}
+                                >
+                                    {item}
+                                    {hoveredItem === item && (
+                                        <motion.div
+                                            layoutId="navbar-hover"
+                                            className="absolute inset-0 rounded-full z-[-1]"
+                                            style={{ backgroundColor: hoverBgColor }}
+                                            transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                                        />
+                                    )}
+                                </a>
+                            );
+                        })}
                     </div>
 
                     {/* Actions */}
                     <div className="flex items-center gap-3">
                         {/* Theme Toggle */}
-                        <button
+                        <motion.button
                             onClick={toggleTheme}
-                            className={`p-2.5 rounded-full transition-all duration-300 active:scale-95 hover:rotate-12 ${useDarkText ? 'hover:bg-slate-100 text-slate-700' : 'hover:bg-white/20 text-white'}`}
+                            className={`p-2.5 rounded-full transition-colors ${useDarkText ? 'hover:bg-slate-100 text-slate-700' : 'hover:bg-white/20 text-white'}`}
+                            whileHover={{ rotate: 15, scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
                             aria-label="Alternar tema"
                         >
                             <span className="material-symbols-outlined text-[1.25rem] leading-none">
                                 {isDarkMode ? 'light_mode' : 'dark_mode'}
                             </span>
-                        </button>
+                        </motion.button>
 
                         {/* CTA */}
-                        <button onClick={() => navigate('/calculadora')} className="hidden md:block btn-primary-glow text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg transition-transform hover:-translate-y-0.5">
-                            Calculadora
-                        </button>
+                        <motion.button
+                            onClick={() => navigate('/calculadora')}
+                            className="hidden md:block btn-primary-glow text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg relative overflow-hidden group"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            <span className="relative z-10">Calcula tu aire</span>
+                            <motion.div
+                                className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 rounded-full"
+                            />
+                        </motion.button>
 
                         {/* Mobile Menu Button */}
                         <button
@@ -196,7 +335,7 @@ const Navbar = () => {
                         </button>
                     </div>
                 </div>
-            </nav>
+            </motion.nav>
 
             {/* Mobile Sidebar Overlay - OUTSIDE nav */}
             <div className={`fixed inset-0 z-[60] md:hidden transition-all duration-300 ${isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
@@ -223,7 +362,7 @@ const Navbar = () => {
                     {/* Navigation Links */}
                     <nav className="p-6">
                         <div className="space-y-2">
-                            {['Inicio', 'Familia Ghara', 'Catálogo', 'Afiliados', 'Servicios'].map((item) => (
+                            {['Inicio', 'Familia Ghara', 'Aliados', 'Servicios'].map((item) => (
                                 <a
                                     key={item}
                                     href={`#${item.toLowerCase().split(' ')[0]}`}

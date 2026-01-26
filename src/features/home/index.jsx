@@ -13,17 +13,15 @@ const Home = () => {
         <>
             <Hero />
 
-            <ScrollReveal>
+            {/* <ScrollReveal>
                 <BestSellers />
-            </ScrollReveal>
+            </ScrollReveal> */}
 
             <ScrollReveal>
                 <MaintenanceBanner />
             </ScrollReveal>
 
-            <ScrollReveal delay={0.2}>
-                <BrandLogos />
-            </ScrollReveal>
+            <BrandLogos />
 
             <ScrollReveal>
                 <OurApproaches />

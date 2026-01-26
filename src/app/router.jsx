@@ -7,6 +7,8 @@ import AfiliadosPage from '../features/afiliados';
 import CatalogoPage from '../features/catalogo';
 import FamiliaGharaPage from '../features/familia';
 import CalculatorPage from '../features/calculator';
+import ResidentialServices from '../features/services/pages/ResidentialServices';
+import EnterpriseServices from '../features/services/pages/EnterpriseServices';
 
 export const router = createBrowserRouter([
     {
@@ -22,13 +24,21 @@ export const router = createBrowserRouter([
                 element: <ServicesPage />,
             },
             {
-                path: 'afiliados',
-                element: <AfiliadosPage />,
+                path: 'servicios/residenciales',
+                element: <ResidentialServices />,
             },
             {
+                path: 'servicios/empresariales',
+                element: <EnterpriseServices />,
+            },
+            {
+                path: 'aliados',
+                element: <AfiliadosPage />,
+            },
+            /* {
                 path: 'catalogo',
                 element: <CatalogoPage />,
-            },
+            }, */
             {
                 path: 'familia',
                 element: <FamiliaGharaPage />,

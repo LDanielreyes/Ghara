@@ -236,7 +236,7 @@ const CalculatorPage = () => {
     const getWhatsAppLink = () => {
         if (!resultado) return '#';
         const msg = `Hola Ghara! Hice un cálculo en su web para ${formData.ciudad}. Necesito un equipo de ${resultado.recomendacion} para un área de ${resultado.detalles.areaRecinto}m². ¿Me asesoran?`;
-        return `https://wa.me/573000000000?text=${encodeURIComponent(msg)}`;
+        return `https://wa.me/573022326569?text=${encodeURIComponent(msg)}`;
     };
 
     return (

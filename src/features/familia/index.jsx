@@ -23,7 +23,6 @@ const FamiliaGharaPage = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         alert('Mensaje enviado (Simulación). Gracias por contactarnos.');
-        // Here you would typically send the data to a backend
         setFormData({ type: 'Petición', name: '', id: '', email: '', message: '' });
     };
 
@@ -37,7 +36,6 @@ const FamiliaGharaPage = () => {
                         src="/media/family-hero.jpg"
                         alt="Familia Ghara"
                         className="w-full h-full object-cover object-center"
-                        onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2070'; }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-transparent dark:from-black/80"></div>
                 </div>
@@ -55,7 +53,7 @@ const FamiliaGharaPage = () => {
                         transition={{ delay: 0.1 }}
                         className="font-display font-bold text-5xl md:text-7xl mb-6 max-w-2xl leading-tight"
                     >
-                        Mucho más que aire, <span className="text-cyan-300 italic font-body">somos familia.</span>
+                        ¿Quiénes <span className="text-cyan-300 italic font-body">somos?</span>
                     </motion.h1>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
@@ -63,50 +61,69 @@ const FamiliaGharaPage = () => {
                         transition={{ delay: 0.2 }}
                         className="text-lg md:text-xl max-w-xl text-slate-100 font-light"
                     >
-                        Creamos espacios donde las historias se comparten y los recuerdos perduran, con la temperatura perfecta para cada abrazo.
+                        Somos un aliado comprometido con garantizar el confort de tu hogar o empresa. Entendemos que un ambiente fresco y agradable no es un lujo, sino una condición esencial para el bienestar.
                     </motion.p>
                 </div>
             </section>
 
-            {/* History Section */}
+            {/* Historia Section - Why/How/What */}
             <section className="py-24 bg-slate-50 dark:bg-slate-900/50">
                 <div className="container mx-auto px-4 md:px-6">
-                    <div className="grid md:grid-cols-2 gap-16 items-center">
+                    <div className="text-center mb-16">
+                        <h2 className="font-display font-bold text-4xl text-slate-900 dark:text-white mb-4">Nuestra Esencia</h2>
+                        <p className="text-slate-500 max-w-2xl mx-auto">Más que una empresa de climatización, somos un aliado comprometido con tu bienestar.</p>
+                    </div>
+
+                    <div className="grid md:grid-cols-3 gap-8">
+                        {/* ¿Por qué? */}
                         <motion.div
-                            initial={{ opacity: 0, x: -30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            className="grid grid-cols-2 gap-4"
+                            transition={{ delay: 0.1 }}
+                            className="bg-white dark:bg-black p-8 rounded-3xl shadow-sm border border-slate-100 dark:border-white/5 text-center group hover:shadow-xl transition-shadow"
                         >
-                            <img src="/media/history-1.jpg" alt="Equipo trabajando" className="rounded-2xl shadow-lg w-full h-64 object-cover" onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=1000'; }} />
-                            <img src="/media/history-2.jpg" alt="Reunión" className="rounded-2xl shadow-lg w-full h-64 object-cover mt-8" onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=1000'; }} />
-                            <img src="/media/history-3.jpg" alt="Oficina" className="rounded-2xl shadow-lg w-full h-64 object-cover" onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1000'; }} />
-                            <img src="/media/history-4.jpg" alt="Soporte" className="rounded-2xl shadow-lg w-full h-64 object-cover mt-8" onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=1000'; }} />
-                        </motion.div>
-                        <motion.div
-                            initial={{ opacity: 0, x: 30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                        >
-                            <h2 className="font-display font-bold text-4xl text-slate-900 dark:text-white mb-6">Nuestra Historia</h2>
-                            <div className="prose dark:prose-invert text-slate-600 dark:text-slate-400">
-                                <p className="mb-4">
-                                    Todo comenzó con una idea simple: el confort no es un lujo, es el escenario donde sucede la vida. En Ghara, no solo vendemos aire acondicionado; entregamos comodidad para esos domingos en familia y productividad para esos lunes de oficina.
-                                </p>
-                                <p className="mb-8">
-                                    A lo largo de los años, nuestro equipo ha crecido, pero nuestra esencia sigue siendo la misma. Detrás de cada instalación hay un técnico que se preocupa, una asesora que escucha y un compromiso inquebrantable de hacer tu hogar ese santuario seguro y fresco que tú y tu familia merecen.
-                                </p>
-                                <blockquote className="border-l-4 border-primary pl-6 py-2 italic text-lg text-slate-800 dark:text-slate-200 bg-white dark:bg-black/20 p-6 rounded-r-xl shadow-sm mb-8">
-                                    "Para nosotros, cada cliente es un nuevo miembro de la familia Ghara. Su bienestar es nuestra obsesión."
-                                </blockquote>
-                                <p>
-                                    Hoy, somos más que una empresa de climatización; somos una comunidad de expertos apasionados por mejorar tu calidad de vida, un grado a la vez.
-                                </p>
-                                <div className="mt-8">
-                                    <img src="/media/signature.png" alt="Firma Fundador" className="h-12 opacity-60 dark:invert" />
-                                    <p className="text-xs mt-2 uppercase tracking-widest text-slate-400">Fundador, Ghara Inc.</p>
-                                </div>
+                            <div className="w-16 h-16 mx-auto bg-primary/10 dark:bg-cyan-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                                <span className="material-symbols-outlined text-3xl text-primary dark:text-cyan-400">psychology</span>
                             </div>
+                            <h3 className="font-display font-bold text-2xl text-primary dark:text-cyan-400 mb-4">¿Por qué?</h3>
+                            <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                                Entendemos que un ambiente fresco y agradable no es un lujo, sino una condición esencial para el bienestar de los hogares y espacios de trabajo.
+                            </p>
+                        </motion.div>
+
+                        {/* ¿Cómo? */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.2 }}
+                            className="bg-white dark:bg-black p-8 rounded-3xl shadow-sm border border-slate-100 dark:border-white/5 text-center group hover:shadow-xl transition-shadow"
+                        >
+                            <div className="w-16 h-16 mx-auto bg-secondary/10 dark:bg-purple-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                                <span className="material-symbols-outlined text-3xl text-secondary dark:text-purple-400">handyman</span>
+                            </div>
+                            <h3 className="font-display font-bold text-2xl text-secondary dark:text-purple-400 mb-4">¿Cómo?</h3>
+                            <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                                Desde la confianza, pasión e innovación. Ofrecemos servicios de atención y agendamiento 24/7 para estar siempre disponibles cuando nos necesites.
+                            </p>
+                        </motion.div>
+
+                        {/* ¿Qué? */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.3 }}
+                            className="bg-white dark:bg-black p-8 rounded-3xl shadow-sm border border-slate-100 dark:border-white/5 text-center group hover:shadow-xl transition-shadow"
+                        >
+                            <div className="w-16 h-16 mx-auto bg-cyan-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                                <span className="material-symbols-outlined text-3xl text-cyan-500">ac_unit</span>
+                            </div>
+                            <h3 className="font-display font-bold text-2xl text-cyan-500 mb-4">¿Qué?</h3>
+                            <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                                Más que una empresa de climatización, somos un aliado comprometido con garantizar el confort de tu hogar o empresa.
+                            </p>
                         </motion.div>
                     </div>
                 </div>
@@ -128,7 +145,7 @@ const FamiliaGharaPage = () => {
                                 </div>
                                 <h3 className="font-display font-bold text-2xl mb-4 text-slate-900 dark:text-white">Nuestra Misión</h3>
                                 <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                                    Proporcionar soluciones de climatización que prioricen el bienestar humano, fusionando tecnología de vanguardia con un servicio cálido y experto que coloca a las familias y sus necesidades en el centro de todo lo que hacemos.
+                                    Brindar soluciones integrales y eficientes para la climatización de hogares y empresas en la costa Caribe colombiana. A través de nuestro equipo técnico calificado, garantizamos suministro de equipo, servicios de instalación, mantenimiento y reparación de aires acondicionados con los más altos estándares de calidad, asegurando el confort y la satisfacción de nuestros clientes.
                                 </p>
                             </div>
                         </motion.div>
@@ -145,7 +162,7 @@ const FamiliaGharaPage = () => {
                                 </div>
                                 <h3 className="font-display font-bold text-2xl mb-4 text-slate-900 dark:text-white">Nuestra Visión</h3>
                                 <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                                    Convertirnos en la marca de climatización más confiable del país, referentes en confort sostenible y servicio humano, donde cada hogar y empresa encuentre no solo un producto, sino un aliado para su calidad de vida y sostenibilidad.
+                                    Ser reconocidos como empresa líder y de confianza en servicios de climatización en la zona de influencia, por nuestra excelencia operacional, la innovación en nuestras soluciones y un sólido compromiso con la fiabilidad y la atención personalizada, consolidándonos como la primera opción para clientes residenciales y comerciales.
                                 </p>
                             </div>
                         </motion.div>
@@ -190,87 +207,107 @@ const FamiliaGharaPage = () => {
             {/* Team Section */}
             <section className="py-24 bg-white dark:bg-black">
                 <div className="container mx-auto px-4 md:px-6">
-                    <div className="flex justify-between items-end mb-12">
-                        <div>
-                            <h2 className="font-display font-bold text-3xl text-slate-900 dark:text-white mb-2">Conoce al Equipo</h2>
-                            <p className="text-slate-500 max-w-lg text-sm">Profesionales certificados, pero sobre todo, personas cálidas listas para refrescar tu día.</p>
-                        </div>
-                        <a href="#" className="text-primary dark:text-cyan-400 text-sm font-bold flex items-center gap-1 hover:gap-2 transition-all">Ver todos <span className="material-symbols-outlined text-sm">arrow_forward</span></a>
+                    <div className="text-center mb-12">
+                        <h2 className="font-display font-bold text-3xl text-slate-900 dark:text-white mb-2">Conoce al Equipo</h2>
+                        <p className="text-slate-500 max-w-lg mx-auto text-sm">Profesionales comprometidos con garantizar tu confort y satisfacción.</p>
                     </div>
 
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
                         {[
-                            { name: 'Roberto M.', role: 'Jefe de Técnicos', img: '/media/team-1.jpg' },
-                            { name: 'Ana S.', role: 'Atención al Cliente', img: '/media/team-2.jpg' },
-                            { name: 'Carlos D.', role: 'Especialista HVAC', img: '/media/team-3.jpg' },
-                            { name: 'Sofia L.', role: 'Sostenibilidad', img: '/media/team-4.jpg' }
+                            { name: 'Raquel Ariza', role: 'CEO', img: '/media/EquipoGhara/tarjeta raqueljpeg.jpeg' },
+                            { name: 'Álvaro Ariza', role: 'Operaciones y Mantenimiento', img: '/media/EquipoGhara/tarjeta alvaro.jpeg' },
+                            { name: 'Cesar Ariza', role: 'Operaciones y Mantenimiento', img: '/media/EquipoGhara/tarjeta cesar.jpeg' },
+                            { name: 'Argemiro Paternina', role: 'Compras & Abastecimiento', img: '/media/EquipoGhara/tarjeta argemiro.jpeg' },
+                            { name: 'Victoria Acosta', role: 'Marketing', img: '/media/EquipoGhara/tarjeta victoriajpeg.jpeg' }
                         ].map((member, i) => (
                             <motion.div
                                 key={i}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: i * 0.1 }}
                                 whileHover={{ y: -5 }}
                                 className="group"
                             >
-                                <div className="aspect-[3/4] rounded-2xl overflow-hidden mb-4 relative bg-slate-100">
+                                <div className="aspect-square rounded-2xl overflow-hidden mb-4 relative bg-slate-100 shadow-lg">
                                     <img
                                         src={member.img}
                                         alt={member.name}
-                                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-                                        onError={(e) => { e.target.src = `https://ui-avatars.com/api/?name=${member.name}&background=random&size=400`; }}
+                                        className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                                        <div className="flex gap-2 text-white">
-                                            <span className="material-symbols-outlined">mail</span>
-                                            <span className="material-symbols-outlined">call</span>
-                                        </div>
+                                    <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                                        <a
+                                            href="https://wa.me/573022326569"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex gap-2 text-white items-center text-xs font-bold"
+                                        >
+                                            <span className="material-symbols-outlined text-lg">call</span>
+                                            Contactar
+                                        </a>
                                     </div>
                                 </div>
-                                <h3 className="font-bold text-slate-900 dark:text-white leading-none mb-1">{member.name}</h3>
-                                <p className="text-xs text-slate-500 uppercase tracking-wider">{member.role}</p>
+                                <h3 className="font-bold text-slate-900 dark:text-white leading-tight mb-1 text-center">{member.name}</h3>
+                                <p className="text-xs text-slate-500 uppercase tracking-wider text-center">{member.role}</p>
                             </motion.div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* Community Banner */}
-            <section className="py-24 bg-[#0C4D89] relative overflow-hidden">
-                <div className="absolute inset-0 bg-[url('/media/pattern.svg')] opacity-10"></div>
-                <div className="container mx-auto px-4 md:px-6 relative z-10">
-                    <div className="grid md:grid-cols-2 gap-12 items-center">
-                        <div className="text-white">
-                            <span className="bg-white/20 px-3 py-1 rounded-lg text-xs font-bold mb-4 inline-block">SOMOS SOCIALES</span>
-                            <h2 className="font-display font-bold text-3xl md:text-5xl mb-6">Devolviendo frescura a nuestra comunidad</h2>
-                            <p className="text-white/80 mb-8 leading-relaxed">
-                                Creemos en el karma del buen aire. Por eso, parte de nuestras ganancias se destina a climatizar escuelas públicas y centros comunitarios locales, y promovemos activamente el reciclaje responsable de equipos antiguos.
-                            </p>
-                            <ul className="space-y-4 mb-8">
-                                <li className="flex items-center gap-3">
-                                    <span className="material-symbols-outlined bg-white/20 p-1 rounded-full text-sm">check</span>
-                                    <span>20 Aulas Climatizadas en 2023</span>
-                                </li>
-                                <li className="flex items-center gap-3">
-                                    <span className="material-symbols-outlined bg-white/20 p-1 rounded-full text-sm">check</span>
-                                    <span>Programa de Reciclaje "Aire Limpio"</span>
-                                </li>
-                            </ul>
-                            <button className="bg-white text-primary px-6 py-3 rounded-full font-bold text-sm hover:bg-slate-100 transition-colors">
-                                Leer informe de impacto
-                            </button>
-                        </div>
-                        <div className="flex gap-4">
-                            <div className="flex-1 mt-8">
-                                <img src="/media/community-1.jpg" className="rounded-2xl shadow-xl w-full h-64 object-cover" alt="Comunidad" onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?auto=format&fit=crop&q=80&w=1000'; }} />
+            {/* Documentos Legales - Políticas de Datos */}
+            <section className="py-24 bg-slate-50 dark:bg-slate-900/50">
+                <div className="container mx-auto px-4 md:px-6">
+                    <div className="text-center mb-12">
+                        <span className="text-primary font-bold text-xs uppercase tracking-widest mb-2 block">Transparencia</span>
+                        <h2 className="font-display font-bold text-3xl text-slate-900 dark:text-white mb-4">Políticas y Autorizaciones</h2>
+                        <p className="text-slate-500 max-w-2xl mx-auto">
+                            En Ghara valoramos tu privacidad. Consulta nuestras políticas de tratamiento de datos personales.
+                        </p>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+                        {/* Política de Tratamiento de Datos */}
+                        <motion.a
+                            href="/media/documentos/politica-tratamiento-datos.pdf"
+                            download
+                            whileHover={{ y: -5, scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            className="bg-white dark:bg-black p-8 rounded-2xl shadow-sm border border-slate-100 dark:border-white/5 flex items-center gap-6 group hover:shadow-xl transition-shadow cursor-pointer"
+                        >
+                            <div className="w-16 h-16 bg-primary/10 dark:bg-cyan-500/10 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                                <span className="material-symbols-outlined text-3xl text-primary dark:text-cyan-400">description</span>
                             </div>
-                            <div className="flex-1 -mt-8">
-                                <img src="/media/community-2.jpg" className="rounded-2xl shadow-xl w-full h-64 object-cover" alt="Voluntariado" onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1593113598345-d9120619a99f?auto=format&fit=crop&q=80&w=1000'; }} />
+                            <div className="flex-1">
+                                <h3 className="font-bold text-lg text-slate-900 dark:text-white mb-1">Política de Tratamiento de Datos</h3>
+                                <p className="text-sm text-slate-500">Documento PDF</p>
                             </div>
-                        </div>
+                            <span className="material-symbols-outlined text-2xl text-primary dark:text-cyan-400 group-hover:translate-y-1 transition-transform">download</span>
+                        </motion.a>
+
+                        {/* Autorización de Tratamiento de Datos */}
+                        <motion.a
+                            href="/media/documentos/autorizacion-tratamiento-datos.pdf"
+                            download
+                            whileHover={{ y: -5, scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            className="bg-white dark:bg-black p-8 rounded-2xl shadow-sm border border-slate-100 dark:border-white/5 flex items-center gap-6 group hover:shadow-xl transition-shadow cursor-pointer"
+                        >
+                            <div className="w-16 h-16 bg-secondary/10 dark:bg-purple-500/10 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:bg-secondary/20 transition-colors">
+                                <span className="material-symbols-outlined text-3xl text-secondary dark:text-purple-400">verified_user</span>
+                            </div>
+                            <div className="flex-1">
+                                <h3 className="font-bold text-lg text-slate-900 dark:text-white mb-1">Autorización de Tratamiento de Datos</h3>
+                                <p className="text-sm text-slate-500">Documento PDF</p>
+                            </div>
+                            <span className="material-symbols-outlined text-2xl text-secondary dark:text-purple-400 group-hover:translate-y-1 transition-transform">download</span>
+                        </motion.a>
                     </div>
                 </div>
             </section>
 
             {/* PQR Section */}
-            <section className="py-24 bg-slate-50 dark:bg-black" id="pqr">
+            <section className="py-24 bg-white dark:bg-black" id="pqr">
                 <div className="container mx-auto px-4 md:px-6">
                     <div className="flex flex-col md:flex-row gap-16">
                         <div className="md:w-1/3">
@@ -288,7 +325,7 @@ const FamiliaGharaPage = () => {
                         </div>
 
                         <div className="md:w-2/3">
-                            <form onSubmit={handleSubmit} className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-lg border border-slate-100 dark:border-white/5">
+                            <form onSubmit={handleSubmit} className="bg-slate-50 dark:bg-slate-900 p-8 rounded-3xl shadow-lg border border-slate-100 dark:border-white/5">
                                 <div className="grid md:grid-cols-2 gap-6 mb-6">
                                     <div className="space-y-2">
                                         <label className="text-sm font-bold text-slate-700 dark:text-slate-300">Nombre Completo</label>
@@ -298,7 +335,7 @@ const FamiliaGharaPage = () => {
                                             value={formData.name}
                                             onChange={handleInputChange}
                                             required
-                                            className="w-full bg-slate-50 dark:bg-black border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary transition-colors"
+                                            className="w-full bg-white dark:bg-black border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary transition-colors"
                                             placeholder="Ej. Juan Pérez"
                                         />
                                     </div>
@@ -310,7 +347,7 @@ const FamiliaGharaPage = () => {
                                             value={formData.email}
                                             onChange={handleInputChange}
                                             required
-                                            className="w-full bg-slate-50 dark:bg-black border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary transition-colors"
+                                            className="w-full bg-white dark:bg-black border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary transition-colors"
                                             placeholder="correo@ejemplo.com"
                                         />
                                     </div>
@@ -321,7 +358,7 @@ const FamiliaGharaPage = () => {
                                                 name="type"
                                                 value={formData.type}
                                                 onChange={handleInputChange}
-                                                className="w-full bg-slate-50 dark:bg-black border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary transition-colors appearance-none"
+                                                className="w-full bg-white dark:bg-black border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary transition-colors appearance-none"
                                             >
                                                 <option>Petición</option>
                                                 <option>Queja</option>
@@ -339,7 +376,7 @@ const FamiliaGharaPage = () => {
                                             name="id"
                                             value={formData.id}
                                             onChange={handleInputChange}
-                                            className="w-full bg-slate-50 dark:bg-black border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary transition-colors"
+                                            className="w-full bg-white dark:bg-black border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary transition-colors"
                                             placeholder="Cédula / NIT"
                                         />
                                     </div>
@@ -351,7 +388,7 @@ const FamiliaGharaPage = () => {
                                         value={formData.message}
                                         onChange={handleInputChange}
                                         required
-                                        className="w-full bg-slate-50 dark:bg-black border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary transition-colors h-32 resize-none"
+                                        className="w-full bg-white dark:bg-black border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary transition-colors h-32 resize-none"
                                         placeholder="Cuéntanos detalladamente tu solicitud..."
                                     ></textarea>
                                 </div>

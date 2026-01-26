@@ -69,7 +69,7 @@ const GrowthCard = ({ isCompany, title, perks, linkText, index }) => {
                 ))}
             </ul>
 
-            <a href="#" className={`inline-flex items-center gap-2 font-bold text-sm transition-all hover:gap-3
+            <a href={isCompany ? "https://ukyk65xb.forms.app/untitled-form" : "#"} target={isCompany ? "_blank" : "_self"} className={`inline-flex items-center gap-2 font-bold text-sm transition-all hover:gap-3
             ${isCompany ? 'text-white hover:text-cyan-400' : 'text-primary hover:text-secondary dark:text-cyber-cyan'}
         `}>
                 {linkText} <span className="material-symbols-outlined text-lg">arrow_forward</span>
@@ -146,8 +146,8 @@ const AfiliadosPage = () => {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.6, delay: 0.3 }}
                             >
-                                Únete a la Red <br />
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-cyan-400 dark:from-white dark:to-cyber-cyan">Líder de Climatización</span>
+                                Únete a la Red de <br />
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-cyan-400 dark:from-white dark:to-cyber-cyan">Aliados Líderes</span>
                             </motion.h1>
                             <motion.p
                                 className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl mb-10"
@@ -155,7 +155,7 @@ const AfiliadosPage = () => {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.6, delay: 0.4 }}
                             >
-                                Potencia tu negocio de HVAC con suministro prioritario, capacitación técnica de vanguardia y acceso a proyectos exclusivos a nivel nacional.
+                                Potencia tu negocio de HVAC con suministro prioritario, capacitación técnica de vanguardia y acceso a proyectos exclusivos como Aliado Ghara.
                             </motion.p>
 
                             <motion.div
@@ -181,37 +181,71 @@ const AfiliadosPage = () => {
                             <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl p-8 border border-slate-100 dark:border-white/10 relative overflow-hidden">
                                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-cyan-400"></div>
 
-                                <h3 className="font-display font-bold text-xl text-slate-900 dark:text-white mb-6">Comienza tu aplicación</h3>
+                                <h3 className="font-display font-bold text-xl text-slate-900 dark:text-white mb-6">Registro de Técnico Aliado</h3>
 
                                 <form className="space-y-4">
-                                    <div>
-                                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Nombre Completo o Empresa</label>
-                                        <input type="text" placeholder="Ej. Juan Pérez" className="w-full bg-slate-50 dark:bg-black border border-slate-200 dark:border-white/20 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-primary dark:focus:border-cyber-cyan transition-colors" />
-                                    </div>
-                                    <div>
-                                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Correo Profesional</label>
-                                        <input type="email" placeholder="juan@empresa.com" className="w-full bg-slate-50 dark:bg-black border border-slate-200 dark:border-white/20 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-primary dark:focus:border-cyber-cyan transition-colors" />
-                                    </div>
                                     <div className="grid grid-cols-2 gap-4">
                                         <div>
-                                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Tipo de Perfil</label>
-                                            <select className="w-full bg-slate-50 dark:bg-black border border-slate-200 dark:border-white/20 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-primary dark:focus:border-cyber-cyan transition-colors">
-                                                <option>Técnico</option>
-                                                <option>Empresa</option>
-                                            </select>
+                                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Nombre Completo *</label>
+                                            <input type="text" required placeholder="Ej. Juan Pérez" className="w-full bg-slate-50 dark:bg-black border border-slate-200 dark:border-white/20 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-primary dark:focus:border-cyber-cyan transition-colors" />
                                         </div>
                                         <div>
-                                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Ciudad</label>
-                                            <input type="text" placeholder="Madrid" className="w-full bg-slate-50 dark:bg-black border border-slate-200 dark:border-white/20 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-primary dark:focus:border-cyber-cyan transition-colors" />
+                                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Cédula *</label>
+                                            <input type="text" required placeholder="1234567890" className="w-full bg-slate-50 dark:bg-black border border-slate-200 dark:border-white/20 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-primary dark:focus:border-cyber-cyan transition-colors" />
                                         </div>
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Celular *</label>
+                                            <input type="tel" required placeholder="300 123 4567" className="w-full bg-slate-50 dark:bg-black border border-slate-200 dark:border-white/20 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-primary dark:focus:border-cyber-cyan transition-colors" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Correo</label>
+                                            <input type="email" placeholder="opcional@correo.com" className="w-full bg-slate-50 dark:bg-black border border-slate-200 dark:border-white/20 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-primary dark:focus:border-cyber-cyan transition-colors" />
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Dirección *</label>
+                                        <input type="text" required placeholder="Calle 123 #45-67" className="w-full bg-slate-50 dark:bg-black border border-slate-200 dark:border-white/20 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-primary dark:focus:border-cyber-cyan transition-colors" />
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Ciudad *</label>
+                                            <input type="text" required placeholder="Barranquilla" className="w-full bg-slate-50 dark:bg-black border border-slate-200 dark:border-white/20 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-primary dark:focus:border-cyber-cyan transition-colors" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Departamento *</label>
+                                            <input type="text" required placeholder="Atlántico" className="w-full bg-slate-50 dark:bg-black border border-slate-200 dark:border-white/20 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-primary dark:focus:border-cyber-cyan transition-colors" />
+                                        </div>
+                                    </div>
+
+                                    {/* File Uploads styled as grouped buttons or smaller inputs */}
+                                    <div className="space-y-3 pt-2">
+                                        {[
+                                            { label: 'Hoja de Vida (PDF) *', req: true, id: "hv" },
+                                            { label: 'Certificados de Estudio *', req: true, id: "certs" },
+                                            { label: 'Certificado Alturas', req: false, id: "height" },
+                                            { label: 'Certificado ARL', req: false, id: "arl" }
+                                        ].map((file) => (
+                                            <div key={file.id} className="relative">
+                                                <label htmlFor={file.id} className="cursor-pointer flex items-center justify-between w-full bg-slate-50 dark:bg-black border border-dashed border-slate-300 dark:border-white/20 rounded-lg px-4 py-2 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors group/file">
+                                                    <span className="text-xs font-bold text-slate-500 dark:text-slate-400 group-hover/file:text-primary dark:group-hover/file:text-cyber-cyan truncate max-w-[200px]">{file.label}</span>
+                                                    <span className="material-symbols-outlined text-slate-400 text-lg">upload_file</span>
+                                                </label>
+                                                <input type="file" id={file.id} required={file.req} className="hidden" />
+                                            </div>
+                                        ))}
                                     </div>
 
                                     <button type="submit" className="w-full bg-primary hover:bg-secondary dark:bg-cyber-cyan dark:hover:bg-white dark:text-black text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 mt-2">
-                                        Postular Ahora
+                                        Enviar Registro
                                     </button>
 
                                     <p className="text-[10px] text-center text-slate-400 mt-4">
-                                        Al enviar aceptas nuestros términos y condiciones de partner.
+                                        Campos marcados con * son obligatorios.
                                     </p>
                                 </form>
                             </div>
@@ -232,7 +266,7 @@ const AfiliadosPage = () => {
                     >
                         <div className="max-w-xl">
                             <span className="text-cyan-500 font-bold text-xs tracking-widest uppercase mb-2 block">¿Por qué unirse?</span>
-                            <h2 className="font-display font-bold text-4xl text-slate-900 dark:text-white">Beneficios de formar parte de nuestra red</h2>
+                            <h2 className="font-display font-bold text-4xl text-slate-900 dark:text-white">Beneficios de formar parte de nuestra red de Aliados</h2>
                         </div>
                         <p className="text-slate-500 dark:text-slate-400 text-sm max-w-xs text-right md:text-left">
                             Ofrecemos un ecosistema diseñado para escalar la operatividad de nuestros aliados.
@@ -296,7 +330,7 @@ const AfiliadosPage = () => {
                                 "Línea de crédito corporativo y financiamiento",
                                 "Gestión de flotas y software de mantenimiento"
                             ]}
-                            linkText="Plan Business"
+                            linkText="Registrar Empresa"
                             index={1}
                         />
                     </div>
@@ -316,7 +350,7 @@ const AfiliadosPage = () => {
 
                         {[
                             { step: "1", title: "Registro de Perfil", desc: "Completa tu información básica y sube tus certificaciones actuales." },
-                            { step: "2", title: "Llamada de Validación", desc: "Nuestro equipo revisará tu experiencia para asignarte el nivel de partner adecuado." },
+                            { step: "2", title: "Llamada de Validación", desc: "Nuestro equipo revisará tu experiencia para asignarte el nivel de aliado adecuado." },
                             { step: "3", title: "Recibe Proyectos", desc: "Comienza a recibir leads y suministros con condiciones exclusivas." }
                         ].map((item, idx) => (
                             <div key={idx} className="flex flex-col items-center text-center relative z-10">
@@ -340,7 +374,7 @@ const AfiliadosPage = () => {
 
                     <div className="bg-white dark:bg-black rounded-3xl p-8 shadow-sm border border-slate-100 dark:border-white/5">
                         <FaqItem
-                            question="¿Tiene algún costo unirse a la red Ghara?"
+                            question="¿Tiene algún costo unirse a la red de aliados Ghara?"
                             answer="El registro inicial es gratuito. Algunos programas de certificación avanzada pueden tener costos de material, pero el acceso a la plataforma de leads es por comisión de éxito o suscripción según el plan."
                         />
                         <FaqItem

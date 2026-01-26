@@ -134,20 +134,28 @@
 
   /* Premium Glassmorphism - Light Mode */
   .glass {
-    background: rgba(255, 255, 255, 0.4); /* Reduced opacity for better blend */
-    backdrop-filter: blur(24px); /* Increased blur */
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(255, 255, 255, 0.3); /* Softer border */
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05); /* Softer shadow */
+    background: rgba(255, 255, 255, 0.25);
+    /* Lower opacity for better glassmorphism */
+    backdrop-filter: blur(32px);
+    /* Stronger blur */
+    -webkit-backdrop-filter: blur(32px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    /* Subtle border */
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.08);
+    /* Minimal shadow */
   }
 
   /* Cyber Glass - Dark Mode */
   .glass-dark {
-    background: rgba(5, 5, 5, 0.5); /* Reduced opacity */
-    backdrop-filter: blur(24px); /* Increased blur */
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(0, 240, 255, 0.1); /* Very subtle border */
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.03); /* Fainter glow */
+    background: rgba(5, 5, 5, 0.35);
+    /* Lower opacity */
+    backdrop-filter: blur(32px);
+    /* Stronger blur */
+    -webkit-backdrop-filter: blur(32px);
+    border: 1px solid rgba(0, 240, 255, 0.12);
+    /* Subtle tech border */
+    box-shadow: 0 0 24px rgba(0, 240, 255, 0.05);
+    /* Soft glow */
   }
 
   /* Universal Glass Utility */

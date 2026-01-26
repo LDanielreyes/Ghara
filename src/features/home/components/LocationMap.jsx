@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css'; // Changed to full path
@@ -96,7 +97,22 @@ const ChangeView = ({ center }) => {
 
 const LocationMap = () => {
     const [userLocation, setUserLocation] = useState(null);
-    const gharaLocation = [10.976843956774486, -74.80834662359939]; // Precise coordinates provided by user
+    const [activeLocation, setActiveLocation] = useState('barranquilla');
+
+    const locations = {
+        barranquilla: {
+            coords: [10.976843956774486, -74.80834662359939],
+            name: "Ghara Barranquilla",
+            address: "Cra. 27 #68b-105, Suroccidente, Barranquilla, Atlántico"
+        },
+        cartagena: {
+            coords: [10.3708, -75.4623], // Coords for El Campestre roughly
+            name: "Ghara Cartagena",
+            address: "Barrio el Campestre, Mz 62 Lt 11 etapa 7, Cartagena, Bolívar"
+        }
+    };
+
+    const currentLocation = locations[activeLocation];
 
     const handleGetDirections = () => {
         if (!navigator.geolocation) {
@@ -135,7 +151,13 @@ const LocationMap = () => {
             `}</style>
             <div className="container mx-auto px-4 md:px-6">
                 <div className="grid lg:grid-cols-2 gap-16 items-center">
-                    <div className="pl-0 lg:pl-10 space-y-8">
+                    <motion.div
+                        initial={{ opacity: 0, x: -30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8 }}
+                        className="pl-0 lg:pl-10 space-y-8"
+                    >
                         <div>
                             <h2 className="font-display font-bold text-5xl text-[#0C4D89] mb-4">Visita nuestra sede</h2>
                             <p className="text-xl text-slate-600 dark:text-slate-400 leading-relaxed font-light">
@@ -143,14 +165,38 @@ const LocationMap = () => {
                             </p>
                         </div>
 
-                        <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-xl border border-slate-100 dark:border-slate-800">
-                            <div className="flex items-start gap-4 mb-6">
-                                <div className="p-3 bg-[#0C4D89]/10 rounded-full text-[#0C4D89]">
+                        <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-xl border border-slate-100 dark:border-slate-800 space-y-6">
+                            {/* Barranquilla */}
+                            <div
+                                onClick={() => setActiveLocation('barranquilla')}
+                                className={`flex items-start gap-4 pb-6 border-b border-slate-100 dark:border-slate-800 cursor-pointer transition-colors p-4 rounded-xl ${activeLocation === 'barranquilla' ? 'bg-slate-50 dark:bg-slate-800/50 ring-1 ring-[#0C4D89]/20' : 'hover:bg-slate-50 dark:hover:bg-slate-800/30'}`}
+                            >
+                                <div className={`p-3 rounded-full transition-colors ${activeLocation === 'barranquilla' ? 'bg-[#0C4D89] text-white shadow-md' : 'bg-[#0C4D89]/10 text-[#0C4D89]'}`}>
                                     <span className="material-symbols-outlined text-3xl">location_on</span>
                                 </div>
                                 <div>
-                                    <h4 className="font-bold text-lg text-slate-900 dark:text-white mb-1">Ghara HQ</h4>
+                                    <h4 className="font-bold text-lg text-slate-900 dark:text-white mb-1 flex items-center gap-2">
+                                        Ghara Barranquilla
+                                        {activeLocation === 'barranquilla' && <span className="text-xs bg-[#0C4D89] text-white px-2 py-0.5 rounded-full">Activa</span>}
+                                    </h4>
                                     <p className="text-slate-600 dark:text-slate-400 font-body">Cra. 27 #68b-105, Suroccidente<br />Barranquilla, Atlántico</p>
+                                </div>
+                            </div>
+
+                            {/* Cartagena */}
+                            <div
+                                onClick={() => setActiveLocation('cartagena')}
+                                className={`flex items-start gap-4 p-4 rounded-xl cursor-pointer transition-colors ${activeLocation === 'cartagena' ? 'bg-slate-50 dark:bg-slate-800/50 ring-1 ring-[#0C4D89]/20' : 'hover:bg-slate-50 dark:hover:bg-slate-800/30'}`}
+                            >
+                                <div className={`p-3 rounded-full transition-colors ${activeLocation === 'cartagena' ? 'bg-[#0C4D89] text-white shadow-md' : 'bg-[#0C4D89]/10 text-[#0C4D89]'}`}>
+                                    <span className="material-symbols-outlined text-3xl">location_on</span>
+                                </div>
+                                <div>
+                                    <h4 className="font-bold text-lg text-slate-900 dark:text-white mb-1 flex items-center gap-2">
+                                        Ghara Cartagena
+                                        {activeLocation === 'cartagena' && <span className="text-xs bg-[#0C4D89] text-white px-2 py-0.5 rounded-full">Activa</span>}
+                                    </h4>
+                                    <p className="text-slate-600 dark:text-slate-400 font-body">Barrio el Campestre<br />Mz 62 Lt 11 etapa 7<br />Cartagena, Bolívar</p>
                                 </div>
                             </div>
 
@@ -159,20 +205,27 @@ const LocationMap = () => {
                                 className="w-full bg-[#0C4D89] text-white font-bold text-lg py-4 rounded-xl hover:bg-[#2678A4] transition-all shadow-lg hover:shadow-[#0C4D89]/30 flex items-center justify-center gap-3 active:scale-95"
                             >
                                 <span className="material-symbols-outlined">near_me</span>
-                                Trazar Ruta en el Mapa
+                                Trazar Ruta a {activeLocation === 'barranquilla' ? 'Barranquilla' : 'Cartagena'}
                             </button>
                             <p className="text-xs text-center mt-4 text-slate-400">
                                 *Te pediremos acceso a tu ubicación para calcular la ruta
                             </p>
                         </div>
-                    </div>
+                    </motion.div>
 
-                    <div className="h-[500px] w-full bg-slate-100 dark:bg-slate-900 rounded-3xl overflow-hidden shadow-2xl border-4 border-white dark:border-slate-800 relative z-0">
+                    <motion.div
+                        initial={{ opacity: 0, x: 30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8 }}
+                        className="h-[500px] w-full bg-slate-100 dark:bg-slate-900 rounded-3xl overflow-hidden shadow-2xl border-4 border-white dark:border-slate-800 relative z-0"
+                    >
                         <MapContainer
-                            center={gharaLocation}
+                            center={currentLocation.coords}
                             zoom={15}
                             scrollWheelZoom={false}
                             style={{ height: "100%", width: "100%", zIndex: 0 }}
+                            key={activeLocation} // Added key to force re-render on location change
                         >
                             <TileLayer
                                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -180,14 +233,14 @@ const LocationMap = () => {
                             />
 
                             {/* Visual Logic Components */}
-                            <ChangeView center={userLocation || gharaLocation} />
-                            {userLocation && <RoutingMachine userLocation={userLocation} destination={gharaLocation} />}
+                            <ChangeView center={userLocation || currentLocation.coords} />
+                            {userLocation && <RoutingMachine userLocation={userLocation} destination={currentLocation.coords} />}
 
-                            <Marker position={gharaLocation} icon={GharaIcon}>
+                            <Marker position={currentLocation.coords} icon={GharaIcon}>
                                 <Popup>
                                     <div className="text-center">
-                                        <b className="text-[#0C4D89]">Ghara Sede Principal</b><br />
-                                        Barranquilla
+                                        <b className="text-[#0C4D89]">{currentLocation.name}</b><br />
+                                        {activeLocation === 'barranquilla' ? 'Barranquilla' : 'Cartagena'}
                                     </div>
                                 </Popup>
                             </Marker>
@@ -198,7 +251,7 @@ const LocationMap = () => {
                                 </Marker>
                             )}
                         </MapContainer>
-                    </div>
+                    </motion.div>
                 </div>
             </div>
         </section>

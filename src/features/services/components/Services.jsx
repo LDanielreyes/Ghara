@@ -223,10 +223,10 @@ const Services = () => {
                         title="Mantenimiento Preventivo"
                         recommended={true}
                         features={[
-                            "Limpieza profunda de filtros",
-                            "Revisión de presión de gas",
-                            "Sanitización de evaporador",
-                            "Lubricación de motores"
+                            "Revisión general del equipo",
+                            "Limpieza de filtros y componentes",
+                            "Verificación de funcionamiento",
+                            "Informe de estado del equipo"
                         ]}
                     />
                     <ServiceCard
@@ -234,10 +234,10 @@ const Services = () => {
                         icon="ac_unit"
                         title="Mantenimiento Correctivo"
                         features={[
-                            "Reparación de fugas",
-                            "Cambio de compresores",
-                            "Carga de gas refrigerante",
-                            "Reemplazo de tarjetas"
+                            "Diagnóstico y reparación de fallas",
+                            "Reemplazo de piezas y componentes",
+                            "Pruebas de funcionamiento",
+                            "Precio acorde a requerimientos"
                         ]}
                     />
                 </div>
